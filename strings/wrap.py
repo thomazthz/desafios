@@ -5,6 +5,19 @@ RE_NON_WHITESPACE = re.compile(r'\S+')
 
 
 def wrap(text, columns=40):
+    """Make a generator that takes a text and yields wrapped line.
+
+    All lines fits the width defined by :columns:.
+
+    The text is splitted in chunks. Each chunk is a simple word
+    or a word preceded or succeded by one or more special characters
+
+    e.g. In the sentence (str): '"Let there be light,"'
+         the chunks are: ['"Let', 'there', 'be', 'light,"']
+
+    :param text: a paragraph (str)
+    :param columns: delimiter of a line width (int)
+    """
     cur_chunk_length = 0
     cur_line = []
 
