@@ -58,6 +58,11 @@ def justify_line(line, columns):
                          'number of columns.')
 
     whitespace_nodes = len(line) - 1
+
+    # Just one chunk, it doesn't need a extra whitespace
+    if whitespace_nodes <= 0:
+        return
+
     whitespaces_remaining = columns - chunks_length
     while whitespaces_remaining > 0:
         if whitespace_nodes > whitespaces_remaining:
