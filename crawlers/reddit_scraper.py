@@ -12,6 +12,12 @@ session = HTMLSession()
 
 
 def get_high_upvotes_threads(subreddits):
+    """Gets high upvote threads for a given list of subreddits
+
+    :param subreddits: a list of subreddit List(str), a single subreddit (str) or
+    multiple subreddits (str) separated by a semicolon
+    """
+
     base_url = 'https://old.reddit.com'
 
     if isinstance(subreddits, str):
@@ -48,4 +54,5 @@ def get_high_upvotes_threads(subreddits):
                     comments_url=f'{base_url}{comments_url}',
                 )
 
+    # Yields only the threads in which upvotes is equals or higher than UPVOTES_THRESHOLD
     yield from filter(lambda t: t.upvotes >= UPVOTES_THRESHOLD, gen_threads(subreddits))
