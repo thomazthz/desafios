@@ -1,6 +1,11 @@
 import click
 
-from wrap import wrap
+from .strings.wrap import wrap
+
+
+@click.group()
+def cli():
+    pass
 
 
 @click.command(name='textwrap')
@@ -11,3 +16,6 @@ def textwrap(text, columns, justified):
     wrapped_text = wrap(text, columns=columns, justified=justified)
     for line in wrapped_text:
         click.echo(line)
+
+
+cli.add_command(textwrap)
