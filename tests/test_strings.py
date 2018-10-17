@@ -1,6 +1,6 @@
 import pytest
 
-from strings.wrap import wrap
+from idwall_tools.strings.wrap import wrap
 
 
 small_texts = [
