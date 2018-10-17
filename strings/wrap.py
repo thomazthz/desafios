@@ -25,15 +25,21 @@ def wrap(text, columns=40):
     # but the values are lazily-evaluated
     for match in RE_NON_WHITESPACE.finditer(text):
         chunk = match.group()
+        chunk_length = len(chunk)
+
+        if chunk_length > columns:
+            raise ValueError('word or text chunk is too big to fit in '
+                             f'{columns} columns: {chunk}.')
+
         # Number of nodes to insert whitespaces: number_of_chunks - 1
         whitespaces_nodes = len(cur_line) - 1
-        if cur_chunks_length + len(chunk) + whitespaces_nodes < columns:
-            cur_chunks_length += len(chunk)
+        if cur_chunks_length + chunk_length + whitespaces_nodes < columns:
+            cur_chunks_length += chunk_length
             cur_line.append(chunk)
         else:
             yield ' '.join(cur_line)
-            cur_chunk_length = 0
-            cur_line = []
+            cur_chunks_length = chunk_length
+            cur_line = [chunk]
 
     # Remaining chunks that did not fit to complete a full line
     if cur_line:
