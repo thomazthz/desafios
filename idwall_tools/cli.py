@@ -2,6 +2,7 @@ import click
 
 from .strings.wrap import wrap
 from .crawlers.reddit_scraper import get_high_upvotes_threads
+from .utils import pprint_thread
 
 
 @click.group()
@@ -23,7 +24,7 @@ def textwrap(text, columns, justified):
 @click.argument('subreddits', type=str)
 def scrape_reddit(subreddits):
     for thread in get_high_upvotes_threads(subreddits):
-        print(thread)
+        pprint_thread(thread)
 
 
 cli.add_command(textwrap)
