@@ -18,7 +18,7 @@ def wrap(text, columns=40):
     :param text: a paragraph (str)
     :param columns: delimiter of a line width (int)
     """
-    cur_chunk_length = 0
+    cur_chunks_length = 0
     cur_line = []
 
     # RE_NON_WHITESPACE works like str.split(),
@@ -27,8 +27,8 @@ def wrap(text, columns=40):
         chunk = match.group()
         # Number of nodes to insert whitespaces: number_of_chunks - 1
         whitespaces_nodes = len(cur_line) - 1
-        if cur_chunk_length + len(chunk) + whitespaces_nodes < columns:
-            cur_chunk_length += len(chunk)
+        if cur_chunks_length + len(chunk) + whitespaces_nodes < columns:
+            cur_chunks_length += len(chunk)
             cur_line.append(chunk)
         else:
             yield ' '.join(cur_line)
