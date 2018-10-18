@@ -16,8 +16,15 @@ def wrap(text, columns=40, justified=False, force=False):
     e.g. In the sentence (str): '"Let there be light,"'
          the chunks are: ['"Let', 'there', 'be', 'light,"']
 
+    The chunk is yielded without breaking, if it exceeds the number of columns.
+    That chunk that exceeds the number of columns, can be break it if force is `True`
+
     :param text: a paragraph (str)
     :param columns: delimiter of a line width (int)
+    :param justified: justify the yielded chunk (bool)
+    :param force: forces the big chunks to break in `n` columns (bool)
+
+    :return: an iterator that yields wrapped chunks of text
     """
 
     def break_big_chunk(chunk):
