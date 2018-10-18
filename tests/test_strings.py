@@ -29,6 +29,13 @@ def test_wrap_when_text_smaller_than_columns(text_input, expected):
 
 
 def test_justified_wrapped_text(input_1, input_2, output_1, output_2):
+    """The justified wrapped texts can't be compared with
+    the output sample given by `data/output_parte2.txt`
+    since the `justify_line` function sometimes adds
+    random whitespaces.
+    So this function asserts only the length of each line
+    and its str contents, ignoring all whitespace characters.
+    """
     splitted_output = output_1.split('\n')
     justified_text = wrap(input_1, justified=True)
     for line, expected in zip(justified_text, splitted_output):
