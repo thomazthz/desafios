@@ -50,6 +50,7 @@ Executar comandos
 Usage: idwall-tools textwrap [OPTIONS] TEXT
 
 Options:
+  -f, --force
   -j, --justified
   -c, --columns INTEGER
   --help                 Show this message and exit.
@@ -77,6 +78,18 @@ Quebrar o texto em `n=40` colunas (justificado):
 Lorem ipsum  dolor sit amet, consectetur
 adipiscing   elit.    Curabitur   dictum
 molestie                           elit.
+```
+
+
+Forçar a quebra de "textos" grandes
+
+`$ idwall-tools textwrap -f "Exemplo com um 'texto' muito grande (https://www.urlgigante.que.possui.mais/que_40_colunas/) no meio da frase."`
+
+```
+Exemplo com um 'texto' muito grande
+(https://www.urlgigante.que.possui.mais/
+que_40_colunas/)
+no meio da frase.
 ```
 
 
