@@ -3,6 +3,7 @@ import click
 from .strings.wrap import wrap
 from .crawlers.reddit_scraper import get_high_upvotes_threads
 from .utils import pprint_thread
+from .bot.telegram_bot import wake_up
 
 
 @click.group()
@@ -27,5 +28,11 @@ def scrape_reddit(subreddits):
         pprint_thread(thread)
 
 
+@click.command(name='wake-up-bot')
+def telegram_bot():
+    wake_up()
+
+
 cli.add_command(textwrap)
 cli.add_command(scrape_reddit)
+cli.add_command(telegram_bot)
