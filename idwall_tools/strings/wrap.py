@@ -5,7 +5,7 @@ import random
 RE_NON_WHITESPACE = re.compile(r'\S+')
 
 
-def wrap(text, columns=40, justified=False):
+def wrap(text, columns=40, justified=False, force=False):
     """Make a generator that takes a text and yields wrapped line.
 
     All lines fits the width defined by :columns:.
@@ -19,6 +19,14 @@ def wrap(text, columns=40, justified=False):
     :param text: a paragraph (str)
     :param columns: delimiter of a line width (int)
     """
+
+    def break_big_chunk(chunk):
+        big_chunk = chunk
+        while len(big_chunk) > columns:
+            yield big_chunk[:columns]
+            big_chunk = big_chunk[columns:]
+        yield big_chunk
+
     cur_chunks_length = 0
     cur_line = []
 
@@ -27,13 +35,8 @@ def wrap(text, columns=40, justified=False):
     for match in RE_NON_WHITESPACE.finditer(text):
         chunk = match.group()
         chunk_length = len(chunk)
-
-        if chunk_length > columns:
-            raise ValueError('word or text chunk is too big to fit in '
-                             f'{columns} columns: {chunk}.')
-
-        # Number of nodes to insert whitespaces: number_of_chunks - 1
         whitespaces_nodes = len(cur_line) - 1
+
         if cur_chunks_length + chunk_length + whitespaces_nodes < columns:
             cur_chunks_length += chunk_length
             cur_line.append(chunk)
@@ -42,8 +45,22 @@ def wrap(text, columns=40, justified=False):
 
             yield chunks_to_str(cur_line)
 
-            cur_chunks_length = chunk_length
-            cur_line = [chunk]
+            # Cur chunk is too big to fit in the cur line
+            if chunk_length > columns:
+                # keep it or break it?
+                if not force:
+                    yield chunk
+                else:
+                    yield from break_big_chunk(chunk)
+
+                # Next iteration will be a fresh one
+                cur_chunks_length = 0
+                cur_line = []
+            else:
+                # Cur chunk has a valid size, put it on cur_line
+                # to be processed in the next iteration
+                cur_chunks_length = chunk_length
+                cur_line = [chunk]
 
     # Remaining chunks that did not fit to complete a full line
     if cur_line:
