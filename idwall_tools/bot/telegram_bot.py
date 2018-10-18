@@ -79,7 +79,7 @@ def wake_up():
 
     if not token:
         raise ValueError('Telegram bot token not defined. '
-                         'Set the env var TELEGRAM_BOT_TOKEN')
+                         'Set TELEGRAM_BOT_TOKEN env var')
 
     updater = Updater(token=token)
 
