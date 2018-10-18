@@ -1,7 +1,5 @@
 from operator import attrgetter
 
-from terminaltables import SingleTable
-
 
 def pprint_thread(thread):
     extra_padding = 8
