@@ -1,6 +1,7 @@
 import pytest
 
 from idwall_tools.strings.wrap import wrap
+from idwall_tools.utils import join_newline
 
 
 small_texts = [
@@ -13,18 +14,15 @@ small_texts = [
     ('', '')
 ]
 
-def gen_to_str(gen):
-    return '\n'.join(list(gen))
-
 
 def test_wrap_with_defaults(input_1, input_2, output_1, output_2):
-    assert gen_to_str(wrap(input_1)) == output_1
-    assert gen_to_str(wrap(input_2)) == output_2
+    assert join_newline(wrap(input_1)) == output_1
+    assert join_newline(wrap(input_2)) == output_2
 
 
 @pytest.mark.parametrize('text_input, expected', small_texts)
 def test_wrap_when_text_smaller_than_columns(text_input, expected):
-    wrapped_text = gen_to_str(wrap(text_input))
+    wrapped_text = join_newline(wrap(text_input))
     assert wrapped_text == expected
 
 
